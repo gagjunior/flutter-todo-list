@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TodoListPage extends StatelessWidget {
@@ -9,22 +10,51 @@ class TodoListPage extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              const Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Adicione uma tarefa',
-                    hintText: 'Ex.: Estudar para prova',
+              Row(
+                children: [
+                  const Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Adicione uma tarefa',
+                        hintText: 'Ex.: Estudar para prova',
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Icon(
+                      Icons.add,
+                      size: 30,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xff00b4cc),
+                      padding: EdgeInsets.all(14),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('+'),
-              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text('Você possui 0 tarefas pendentes'),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Limpar tudo'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xff00b4cc),
+                      padding: EdgeInsets.all(14),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
