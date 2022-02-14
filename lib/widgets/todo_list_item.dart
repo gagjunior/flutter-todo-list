@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TodoListItem extends StatelessWidget {
-  const TodoListItem({Key? key}) : super(key: key);
+  const TodoListItem({Key? key, required this.title}) : super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(4),
         color: Colors.grey[200],
       ),
       child: Column(
@@ -21,7 +24,7 @@ class TodoListItem extends StatelessWidget {
             ),
           ),
           Text(
-            'Tarefa 123',
+            title,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
