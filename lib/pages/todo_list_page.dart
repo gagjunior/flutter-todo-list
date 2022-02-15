@@ -11,10 +11,11 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
-
   final TextEditingController todosController = TextEditingController();
 
   List<Todo> todos = [];
+  Todo? deletedTodo;
+  int? deletedTodoPos;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +44,8 @@ class _TodoListPageState extends State<TodoListPage> {
                       onPressed: () {
                         String text = todosController.text;
                         setState(() {
-                          Todo newTodo = Todo(
-                              title: text,
-                              dateTime: DateTime.now()
-                          );
+                          Todo newTodo =
+                              Todo(title: text, dateTime: DateTime.now());
                           todos.add(newTodo);
                         });
                         todosController.clear();
@@ -68,10 +67,10 @@ class _TodoListPageState extends State<TodoListPage> {
                     shrinkWrap: true,
                     children: [
                       for (Todo todo in todos)
-                       TodoListItem(
-                         todo: todo,
-                         onDelete: onDelete,
-                       ),
+                        TodoListItem(
+                          todo: todo,
+                          onDelete: onDelete,
+                        ),
                     ],
                   ),
                 ),
@@ -79,7 +78,8 @@ class _TodoListPageState extends State<TodoListPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: Text('Você possui ${todos.length} tarefas pendentes'),
+                      child:
+                          Text('Você possui ${todos.length} tarefas pendentes'),
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
@@ -100,9 +100,34 @@ class _TodoListPageState extends State<TodoListPage> {
     );
   }
 
-  void onDelete(Todo todo){
+  void onDelete(Todo todo) {
+    deletedTodo = todo;
+    deletedTodoPos = todos.indexOf(todo);
+
     setState(() {
       todos.remove(todo);
     });
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 5),
+          content: Text(
+            'Tarefa ${todo.title} foi removida com sucesso',
+            style: TextStyle(
+              color: Colors.black54,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          action: SnackBarAction(
+            label: 'Desfazer',
+            textColor: Color(0xff00b4cc),
+            onPressed: () {
+              setState(() {
+                todos.insert(deletedTodoPos!, deletedTodo!);
+              });
+            },
+          )),
+    );
   }
 }
