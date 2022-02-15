@@ -83,7 +83,7 @@ class _TodoListPageState extends State<TodoListPage> {
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: showDeleteTodosDialog,
                       child: Text('Limpar tudo'),
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xff00b4cc),
@@ -111,7 +111,7 @@ class _TodoListPageState extends State<TodoListPage> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 5),
           content: Text(
             'Tarefa ${todo.title} foi removida com sucesso',
             style: TextStyle(
@@ -129,5 +129,42 @@ class _TodoListPageState extends State<TodoListPage> {
             },
           )),
     );
+  }
+
+  void showDeleteTodosDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Limpar tudo?'),
+        content: Text('Você tem certeza que deseja apagar todas as tarefas?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancelar'),
+            style: TextButton.styleFrom(
+              primary: Colors.lightBlue,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              deleteAllTodos();
+            },
+            child: Text('Limpar tudo'),
+            style: TextButton.styleFrom(
+              primary: Colors.red,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void deleteAllTodos(){
+    setState(() {
+      todos.clear();
+    });
   }
 }
