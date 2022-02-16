@@ -41,13 +41,13 @@ class TodoListItem extends StatelessWidget {
               children: [
                 Text(
                   DateFormat('dd/MM/yyyy - HH:mm').format(todo.dateTime),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                   ),
                 ),
                 Text(
                   todo.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
